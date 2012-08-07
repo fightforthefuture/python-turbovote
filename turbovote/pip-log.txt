@@ -1,0 +1,23 @@
+Downloading/unpacking python-requests
+  Getting page http://pypi.python.org/simple/python-requests
+  Could not fetch URL http://pypi.python.org/simple/python-requests: HTTP Error 404: Not Found (python-requests does not have any releases)
+  Will skip URL http://pypi.python.org/simple/python-requests when looking for download links for python-requests
+  Getting page http://pypi.python.org/simple/
+  URLs to search for versions for python-requests:
+  * http://pypi.python.org/simple/python-requests/
+  Getting page http://pypi.python.org/simple/python-requests/
+  Could not fetch URL http://pypi.python.org/simple/python-requests/: HTTP Error 404: Not Found (python-requests does not have any releases)
+  Will skip URL http://pypi.python.org/simple/python-requests/ when looking for download links for python-requests
+  Could not find any downloads that satisfy the requirement python-requests
+No distributions at all found for python-requests
+Exception information:
+Traceback (most recent call last):
+  File "/Users/adamduston/envs/turbovote/lib/python2.6/site-packages/pip-0.6.3-py2.6.egg/pip/basecommand.py", line 115, in main
+    self.run(options, args)
+  File "/Users/adamduston/envs/turbovote/lib/python2.6/site-packages/pip-0.6.3-py2.6.egg/pip/commands/install.py", line 155, in run
+    requirement_set.install_files(finder, force_root_egg_info=self.bundle, bundle=self.bundle)
+  File "/Users/adamduston/envs/turbovote/lib/python2.6/site-packages/pip-0.6.3-py2.6.egg/pip/req.py", line 823, in install_files
+    url = finder.find_requirement(req_to_install, upgrade=self.upgrade)
+  File "/Users/adamduston/envs/turbovote/lib/python2.6/site-packages/pip-0.6.3-py2.6.egg/pip/index.py", line 117, in find_requirement
+    raise DistributionNotFound('No distributions at all found for %s' % req)
+DistributionNotFound: No distributions at all found for python-requests
