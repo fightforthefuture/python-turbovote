@@ -43,7 +43,8 @@ class API(object):
     def partners(self):
         return self._call("partners")
 
-    def create(self, voter_first, voter_last, voter_prefix, voter_suffix, voter_email, 
-               voter_street, voter_city, voter_state, voter_zip, voter_dob, voter_party,
-               voter_citizen, voter_service_type, voter_hostname):
+    def create(self, voter_first, voter_last, voter_prefix, voter_suffix, 
+               voter_email, voter_street, voter_city, voter_state, voter_zip, 
+               voter_dob, voter_party, voter_citizen, voter_service_type, 
+               voter_hostname):
         return self._call("create", **_locals(locals()))
