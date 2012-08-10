@@ -47,4 +47,7 @@ class API(object):
                voter_email, voter_street, voter_city, voter_state, voter_zip, 
                voter_dob, voter_party, voter_citizen, voter_service_type, 
                voter_hostname):
-        return self._call("create", **_locals(locals()))
+        params = _locals(locals())
+        params["voter_dob"] = voter_dob.strftime("%Y-%m-%d")
+        params["voter_citizen"] = "true" if voter_citizen else "false"
+        return self._call("create", **params)
