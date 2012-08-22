@@ -1,7 +1,7 @@
 import requests
 import re
 
-_URL_PREFIX = "https://staging.turbovote.org/api/"
+_URL_PREFIX = "https://turbovote.net/api/"
 
 def _bracketize(key):
     if "_" in key:
