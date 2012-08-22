@@ -1,6 +1,9 @@
 import requests
 import re
 
+from turbovote.exceptions import TurboVoteException
+
+
 _URL_PREFIX = "https://turbovote.net/api/"
 
 def _bracketize(key):
@@ -25,7 +28,14 @@ class API(object):
         for k, v in kwargs.items():
             params[_bracketize(k)] = v
         r = requests.get(url, params=params)
-        return r.json
+        p = r.json
+
+        if p['status'] == 'error':
+            exception = TurboVoteException('Unknown Exception', p['errors'])
+            raise exception
+
+        return p
+
 
     def version(self):
         return self._call("version")
@@ -62,8 +72,10 @@ class API(object):
         ]
         if not all(arg in kwargs for arg in required_kwargs):
             raise AttributeError('Missing required argument(s)')
+
         kwargs.update({
             'voter_dob': kwargs['voter_dob'].strftime("%Y-%m-%d"),
             'voter_citizen': "true" if kwargs['voter_citizen'] else "false",
         })
+
         return self._call("create", **kwargs)
