@@ -43,11 +43,27 @@ class API(object):
     def partners(self):
         return self._call("partners")
 
-    def create(self, voter_first, voter_last, voter_prefix, voter_suffix, 
-               voter_email, voter_street, voter_city, voter_state, voter_zip, 
-               voter_dob, voter_party, voter_citizen, voter_service_type, 
-               voter_hostname):
-        params = _locals(locals())
-        params["voter_dob"] = voter_dob.strftime("%Y-%m-%d")
-        params["voter_citizen"] = "true" if voter_citizen else "false"
-        return self._call("create", **params)
+    def create(self, **kwargs):
+        required_kwargs = [
+            'voter_first',
+            'voter_last',
+            'voter_prefix',
+            'voter_suffix',
+            'voter_email',
+            'voter_street',
+            'voter_city',
+            'voter_state',
+            'voter_zip',
+            'voter_dob',
+            'voter_party',
+            'voter_citizen',
+            'voter_service_type',
+            'voter_hostname',
+        ]
+        if not all(arg in kwargs for arg in required_kwargs):
+            raise AttributeError('Missing required argument(s)')
+        kwargs.update({
+            'voter_dob': kwargs['voter_dob'].strftime("%Y-%m-%d"),
+            'voter_citizen': "true" if kwargs['voter_citizen'] else "false",
+        })
+        return self._call("create", **kwargs)
