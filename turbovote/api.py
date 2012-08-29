@@ -2,9 +2,8 @@ import requests
 import re
 
 from turbovote.exceptions import TurboVoteException
+from turbovote.settings import URL_PREFIX
 
-
-_URL_PREFIX = "https://turbovote.net/api/"
 
 def _bracketize(key):
     if "_" in key:
@@ -23,18 +22,18 @@ class API(object):
         self._api_key = api_key
 
     def _call(self, method, **kwargs):
-        url = _URL_PREFIX + method
+        url = URL_PREFIX + method
         params = { "token": self._api_key }
         for k, v in kwargs.items():
             params[_bracketize(k)] = v
-        r = requests.get(url, params=params)
-        p = r.json
+        response = requests.get(url, params=params)
+        parsed = response.json
 
-        if p['status'] == 'error':
-            exception = TurboVoteException('Unknown Exception', p['errors'])
+        if 'status' in parsed and parsed['status'] == 'error':
+            exception = TurboVoteException('Unknown Exception', parsed['errors'])
             raise exception
 
-        return p
+        return parsed
 
 
     def version(self):
@@ -52,6 +51,10 @@ class API(object):
 
     def partners(self):
         return self._call("partners")
+
+    def email_available(self, email):
+        call = self._call("email_available", email=email)
+        return call['available']
 
     def create(self, **kwargs):
         required_kwargs = [
