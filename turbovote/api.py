@@ -1,8 +1,12 @@
+import logging
 import requests
 import re
 
 from turbovote.exceptions import TurboVoteException
 from turbovote.settings import URL_PREFIX
+
+
+logger = logging.getLogger(__file__)
 
 
 def _bracketize(key):
@@ -26,15 +30,17 @@ class API(object):
         params = { "token": self._api_key }
         for k, v in kwargs.items():
             params[_bracketize(k)] = v
+        logger.info("%s\n\n%s" % (
+            url,
+            params
+        ))
         response = requests.get(url, params=params)
         parsed = response.json
-
         if 'status' in parsed and parsed['status'] == 'error':
             exception = TurboVoteException('Unknown Exception', parsed['errors'])
             raise exception
 
         return parsed
-
 
     def version(self):
         return self._call("version")
