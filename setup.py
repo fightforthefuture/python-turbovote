@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="python-turbovote",
-    version="0.0.1",
+    version="0.0.2",
     author="Fight for the Future",
     author_email="",
     packages=find_packages(),
